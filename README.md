@@ -52,7 +52,6 @@ New-Image -text "lord death" -path "D:\Death\"
 ```
 ## EXAMPLE
 ```powershell
-PS C:\> New-Image -ImageText "Lord Death" -BackGroundMode "Solid" -SolidColor "255, 0, 255, 200" -FontFace "Segoe Script" 
->> -FontSize 18 -FontColor "MidnightBlue" -ImageName "LordDeath" -ImageType "png" 
+New-Image -ImageText "Lord Death" -BackGroundMode "Solid" -SolidColor "255, 0, 255, 200" -FontFace "Segoe Script" -FontSize 18 -FontColor "MidnightBlue" -ImageName "LordDeath" -ImageType "png" 
 ```
 ![Example](https://github.com/deathcrafter/Text2Image/blob/master/NewImage.png)
