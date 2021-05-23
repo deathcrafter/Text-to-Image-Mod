@@ -35,24 +35,52 @@ function New-Image
                    ValueFromPipelineByPropertyName=$true, 
                    ValueFromRemainingArguments=$false)]
         [ValidateNotNull()]
-        [ValidateSet("PowerShell","CMD","PuTTY","LinuxTerminal")]
-        [Alias("Style")]
-        $ImageStyle="PowerShell",
+        [ValidateSet("Transparent","SolidColor")]
+        [Alias("BackgroundMode")]
+        $ImageStyle="Transparent",
 
-     
-        
+        #Background color in solid mode
+        [Parameter(ValueFromPipeline=$true,
+                   ValueFromPipelineByPropertyName=$true, 
+                   ValueFromRemainingArguments=$false)]
+        [Alias("SolidColor")]
+        $SColor='255,30,30,30',
+
+        #FontFace
+        [Parameter(ValueFromPipeline=$true,
+                   ValueFromPipelineByPropertyName=$true, 
+                   ValueFromRemainingArguments=$false)]
+        [Alias("FontFace","font")]
+        $Face="Segoe UI",
+
+        #FontSize
+        [Parameter(ValueFromPipeline=$true,
+                   ValueFromPipelineByPropertyName=$true, 
+                   ValueFromRemainingArguments=$false)]
+        [Alias("FontSize","size")]
+        $FSize="11",
+
+        #FontColor
+        [Parameter(ValueFromPipeline=$true,
+                   ValueFromPipelineByPropertyName=$true, 
+                   ValueFromRemainingArguments=$false)]
+        [Alias("FontColor")]
+        $FColor="White",
+
+                
         # New Image Format
         [Parameter(ValueFromPipeline=$true,
                    ValueFromPipelineByPropertyName=$true, 
                    ValueFromRemainingArguments=$false)]
         [ValidateSet("Png", "Bmp", "Gif", "Jpeg", "Tiff")]
+        [Alias("ImageType","type")]
         $ImageFormat="Png",
 
         # New Image Output Path. Default to Current Lcoation
         [Parameter(ValueFromPipeline=$true,
                    ValueFromPipelineByPropertyName=$true, 
                    ValueFromRemainingArguments=$false)]
-        [Alias("path")]
+        [Alias("ImagePath","path")]
         $OutputPath,
 
         # New Image Name
@@ -76,39 +104,26 @@ function New-Image
                   
                   switch ($ImageStyle)
                   {
-                      'PowerShell' {
+                      'Transparent' {
                         $ImageStyleObjProps=@{
-                            FontName="Lucida Console"
-                            FontSize=9
-                            TextColor=[System.Drawing.Brushes]::White
-                            BackgroundColor=[System.Drawing.Color]::FromArgb(1,36,86)
+                            FontName=$Face
+                            FontSize=$FSize
+                            TextColor=[System.Drawing.Brushes]::$FColor
+                            BackgroundColor=[System.Drawing.Color]::FromArgb(0,0,0,0)
                         }
                         break
                       }
-                      'CMD' {
+                      'SolidColor' {
+                        $aCache = [regex]::Match($SColor, "^(\d{0,3}?)\,?\s+?(\d{0,3})\,\s+?(\d{0,3})\,\s+?(\d{0,3})$").captures.groups[1].value
+                        $aCol = $(if($aCache){$aCache}else{255})
+                        $rCol = [regex]::Match($SColor, "^(\d{0,3}?)\,?\s+?(\d{0,3})\,\s+?(\d{0,3})\,\s+?(\d{0,3})$").captures.groups[2].value
+                        $gCol = [regex]::Match($SColor, "^(\d{0,3}?)\,?\s+?(\d{0,3})\,\s+?(\d{0,3})\,\s+?(\d{0,3})$").captures.groups[3].value
+                        $bCol = [regex]::Match($SColor, "^(\d{0,3}?)\,?\s+?(\d{0,3})\,\s+?(\d{0,3})\,\s+?(\d{0,3})$").captures.groups[4].value
                         $ImageStyleObjProps=@{
-                            FontName="Consolas"
-                            FontSize=10
-                            TextColor=[System.Drawing.Brushes]::LightGray
-                            BackgroundColor=[System.Drawing.Color]::FromArgb(12,12,12)
-                        }
-                        break
-                      }
-                      'PuTTY' {
-                        $ImageStyleObjProps=@{
-                            FontName="Courier New"
-                            FontSize=10
-                            TextColor=[System.Drawing.Brushes]::LightGray
-                            BackgroundColor=[System.Drawing.Color]::FromArgb(0,0,0)
-                        }
-                        break
-                      }
-                      'LinuxTerminal' {
-                        $ImageStyleObjProps=@{
-                            FontName="Terminus Font"
-                            FontSize=9
-                            TextColor=[System.Drawing.Brushes]::White
-                            BackgroundColor=[System.Drawing.Color]::FromArgb(0,0,0)
+                            FontName=$Face
+                            FontSize=$FSize
+                            TextColor=[System.Drawing.Brushes]::$FColor
+                            BackgroundColor=[System.Drawing.Color]::FromArgb($rCol,$gCol,$bCol,$aCol)
                         }
                         break
                       }
@@ -126,7 +141,7 @@ function New-Image
                   $GraphicsObj.CompositingQuality=[System.Drawing.Drawing2D.CompositingQuality]::HighQuality
                   $GraphicsObj.InterpolationMode=[System.Drawing.Drawing2D.InterpolationMode]::HighQualityBilinear
                   $GraphicsObj.PixelOffsetMode=[System.Drawing.Drawing2D.PixelOffsetMode]::HighQuality
-                  $GraphicsObj.SmoothingMode=[System.Drawing.Drawing2D.SmoothingMode]::HighQuality
+                  $GraphicsObj.SmoothingMode=[System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
 
                   $GraphicsObj.Clear($ImageStyleObj.BackgroundColor)
                   $GraphicsObj.DrawString($ImageText, $FontObj, $ImageStyleObj.TextColor, 0, 0)
@@ -135,7 +150,7 @@ function New-Image
                   $GraphicsObj.Flush()
                   $GraphicsObj.Dispose()
                   
-                  if($OutputPath -eq $null){
+                  if($null -eq $OutputPath){
                     $OutputPath=Get-Location
                     $OutputPath=$OutputPath.Path.Replace("\","\\")+"\\"
                   }else{
