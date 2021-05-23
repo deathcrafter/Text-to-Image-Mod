@@ -67,4 +67,5 @@ ConvertTo-Image -text "lord death" -path "D:\Death\"
 txt2img -ImageText "Testing text2image mod" -BackGroundMode "SolidColor" -SolidColor "200, 255, 0, 255" -FontFace "Segoe UI Variable Display Semilight" -FontSize 18 -FontColor "MidnightBlue" -ImageName "LordDeath" -ImageType "png"
 ```
 Output:
+
 ![Example](https://github.com/deathcrafter/Text2Image/blob/master/LordDeath.png)
