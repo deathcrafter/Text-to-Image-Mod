@@ -22,7 +22,7 @@ New-Image -text "lord death"
 ```powershell
 New-Image -text "lord death" -Style "Transparent"
 ```
-### SolidColor (default 30,30,30,255 | only works with BackgroundMode Solid)
+### SolidColor (format ARGB) (default 255,30,30,30 | only works with BackgroundMode Solid)
 ```powershell
 New-Image -text "lord death" -SolidColor "20,40,60,190"
 ```
