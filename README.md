@@ -13,9 +13,46 @@ New-Image
 ## Dependencies
 This module has no dependencies.
 
+## Parameters
+### ImageText or text (mandatory)
+```powershell
+New-Image -text "lord death"
+```
+### BackgroundMode (Transparent(default)/Solid)
+```powershell
+New-Image -text "lord death" -Style "Transparent"
+```
+### SolidColor (default 30,30,30,255 | only works with BackgroundMode Solid)
+```powershell
+New-Image -text "lord death" -SolidColor "20,40,60,190"
+```
+### FontFace or font (default Segoe UI)
+```powershell
+New-Image -text "lord death" -font "Comfortaa Regular"
+```
+### FontSize or size (default 11)
+```powershell
+New-Image -text "lord death" -size 20
+```
+### FontColor (default White, check [here](https://docs.microsoft.com/en-us/dotnet/api/system.drawing.brushes?view=net-5.0#properties) for more colors)
+```powershell
+New-Image -text "lord death" -FontColor "AliceBlue"
+```
+### ImageName or name (default NewIamge)
+```powershell
+New-Image -text "lord death" -name LordDeath
+```
+### ImageType or type (Png(default)/Bmp/Gif/Jpeg/Tiff)
+```powershell
+New-Image -text "lord death" -type "Jpeg"
+```
+### ImagePath or path (default current directory)
+```powershell
+New-Image -text "lord death" -path "D:\Death\"
+```
 ## EXAMPLE
 ```powershell
-PS C:\> t2i -ImageText "`r`nTesting Text2Image Powershell Module`r`n" -ImageStyle PuTTY -Verbose
-VERBOSE: Performing the operation "New-Image" on target "'Testing Text2Image Powershell Module'. Using PuTTY style". 
+PS C:\> New-Image -ImageText "Lord Death" -BackGroundMode "Solid" -SolidColor "255, 0, 255, 200" -FontFace "Segoe Script" 
+>> -FontSize 18 -FontColor "MidnightBlue" -ImageName "LordDeath" -ImageType "png" 
 ```
-![Example](https://github.com/andysvints/Text2Image/blob/master/NewImage.png)
+![Example](https://github.com/deathcrafter/Text2Image/blob/master/NewImage.png)
