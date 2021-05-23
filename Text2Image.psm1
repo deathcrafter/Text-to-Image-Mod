@@ -10,7 +10,7 @@
     Testing Text2Image Powershell Module
     '. Using PuTTY style".
 #>
-function New-Image
+function Text-ToImage
 {
     [CmdletBinding(SupportsShouldProcess=$true, 
                   PositionalBinding=$false,
