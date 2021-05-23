@@ -114,16 +114,16 @@ function Text-ToImage
                         break
                       }
                       'SolidColor' {
-                        $aCache = [regex]::Match($SColor, "^(\d{0,3}?)\,?\s+?(\d{0,3})\,\s+?(\d{0,3})\,\s+?(\d{0,3})$").captures.groups[1].value
+                        $aCache = [regex]::Match($SColor, "^(\d{0,3}?)\,?\s*?(\d{0,3})\,\s*?(\d{0,3})\,\s*?(\d{0,3})$").captures.groups[1].value
                         $aCol = $(if($aCache){$aCache}else{255})
-                        $rCol = [regex]::Match($SColor, "^(\d{0,3}?)\,?\s+?(\d{0,3})\,\s+?(\d{0,3})\,\s+?(\d{0,3})$").captures.groups[2].value
-                        $gCol = [regex]::Match($SColor, "^(\d{0,3}?)\,?\s+?(\d{0,3})\,\s+?(\d{0,3})\,\s+?(\d{0,3})$").captures.groups[3].value
-                        $bCol = [regex]::Match($SColor, "^(\d{0,3}?)\,?\s+?(\d{0,3})\,\s+?(\d{0,3})\,\s+?(\d{0,3})$").captures.groups[4].value
+                        $rCol = [regex]::Match($SColor, "^(\d{0,3}?)\,?\s*?(\d{0,3})\,\s*?(\d{0,3})\,\s*?(\d{0,3})$").captures.groups[2].value
+                        $gCol = [regex]::Match($SColor, "^(\d{0,3}?)\,?\s*?(\d{0,3})\,\s*?(\d{0,3})\,\s*?(\d{0,3})$").captures.groups[3].value
+                        $bCol = [regex]::Match($SColor, "^(\d{0,3}?)\,?\s*?(\d{0,3})\,\s*?(\d{0,3})\,\s*?(\d{0,3})$").captures.groups[4].value
                         $ImageStyleObjProps=@{
                             FontName=$Face
                             FontSize=$FSize
                             TextColor=[System.Drawing.Brushes]::$FColor
-                            BackgroundColor=[System.Drawing.Color]::FromArgb($rCol,$gCol,$bCol,$aCol)
+                            BackgroundColor=[System.Drawing.Color]::FromArgb($aCol,$rCol,$gCol,$bCol)
                         }
                         break
                       }
