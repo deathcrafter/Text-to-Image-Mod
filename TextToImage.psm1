@@ -10,12 +10,12 @@
     Testing Text2Image Powershell Module
     '. Using PuTTY style".
 #>
-function Text-ToImage
+function ConvertTo-Image
 {
-    [CmdletBinding(SupportsShouldProcess=$true, 
+    [CmdletBinding(SupportsShouldProcess=$true,
                   PositionalBinding=$false,
                   ConfirmImpact='Medium')]
-    [Alias('t2i')]
+    [Alias('txt2img')]
     Param
     (
         # Text which should be converted to Image
