@@ -32,7 +32,7 @@ ConvertTo-Image -text "lord death"
 ```
 ### BackgroundMode (Transparent(default)/Solid)
 ```powershell
-ConvertTo-Image -text "lord death" -Style "Transparent"
+ConvertTo-Image -text "lord death" -BackgroundMode "Transparent"
 ```
 ### SolidColor (format ARGB) (default 255,30,30,30 | only works with BackgroundMode Solid)
 ```powershell
